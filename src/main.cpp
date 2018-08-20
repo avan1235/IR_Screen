@@ -1,14 +1,10 @@
 #include <Arduino.h>
 #include <U8g2lib.h>
-#include <IRremote.h>
+#include <InterpretIRData.h>
 
-
-#define INTERVAL 100
 #define SPEAKER_PIN 9
 
-int RECV_PIN = 0;
-IRrecv irrecv(RECV_PIN);
-decode_results results;
+InterpretIRData dataInterpreter;
 
 String toScreen;
 String gotFromPilot;
@@ -24,33 +20,7 @@ void u8g2_prepare(void) {
 }
 
 void u8g2_ascii() {
-    if(gotFromPilot == "e0e006f9"){
-      toScreen = "UP";
-    }
-    else if(gotFromPilot == "e0e08679"){
-      toScreen = "DOWN";
-    }
-    else if(gotFromPilot == "e0e046b9"){
-      toScreen = "RIGHT";
-    }
-    else if(gotFromPilot == "e0e0a659"){
-      toScreen = "LEFT";
-    }
-    else if(gotFromPilot == "e0e016e9"){
-      toScreen = "CENTER";
-    }
-    else if(gotFromPilot == "e0e0b44b"){
-      toScreen = "EXIT";
-    }
-    else if(gotFromPilot == "e0e0f00f"){
-      toScreen = "MUTE";
-    }
-    else if(gotFromPilot == "e0e058a7"){
-      toScreen = "MENU";
-    }
-    else{
-      toScreen = "No match!?!";
-    }
+  toScreen = dataInterpreter.interpretSignal(gotFromPilot);
   u8g2.drawStr( 0, 0, toScreen.c_str());
 }
 
@@ -65,37 +35,13 @@ void setup(void) {
 
   pinMode(SPEAKER_PIN, HIGH);
 
-  irrecv.enableIRIn(); // Start the receiver
+  
 }
 
-/**
- * up - e0e006f9
- * down - e0e08679
- * right - e0e046b9
- * left - e0e0a659
- * center - e0e016e9
- * exit - e0e0b44b
- * mute - e0e0f00f
- * menu - e0e058a7
- */
-
-unsigned long previousMillis;
-unsigned long currentMillis;
-
 void loop(void) {
-  currentMillis = millis();
+  
   digitalWrite(SPEAKER_PIN, LOW);
-
-  if (currentMillis - previousMillis >= INTERVAL) {
-    previousMillis = currentMillis;
-    if (irrecv.decode(&results)) {
-      gotFromPilot =  String(results.value, HEX);
-      irrecv.resume(); // Receive the next value
-    }
-    else{
-      toScreen = "No signal";
-    }
-  }
+  gotFromPilot = dataInterpreter.checkIRSignal();
 
   u8g2.firstPage();  
   do {
