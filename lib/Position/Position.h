@@ -5,7 +5,7 @@
 
 #define MAX_X_POSITION 32
 #define MAX_Y_POSITION 16
-     
+
 typedef uint8_t byte;
 
 class Position {
@@ -13,7 +13,7 @@ class Position {
         byte xPosition;
         byte yPosition;
     public:
-        Position(byte x, byte y);
+        Position();
         ~Position();
         void setX(byte x);
         void setY(byte y);

@@ -1,8 +1,9 @@
 #include "Position.h"
 
-Position::Position(byte x, byte y){
-    xPosition = x;
-    yPosition = y;
+Position::Position(){
+    /**
+     * nothing to do here
+     */
 }
 
 Position::~Position(){

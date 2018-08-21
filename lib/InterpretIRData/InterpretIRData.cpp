@@ -2,9 +2,6 @@
 
 #include <IRremote.h>
 
-#define RECV_PIN 0
-#define IR_INTERVAL 100
-
 const String UP = "e0e006f9";
 const String DOWN = "e0e08679";
 const String RIGHT = "e0e046b9";
@@ -13,12 +10,6 @@ const String CENTER = "e0e016e9";
 const String EXIT = "e0e0b44b";
 const String MUTE = "e0e0f00f";
 const String MENU = "e0e058a7";
-
-IRrecv irrecv(RECV_PIN);
-decode_results results;
-
-unsigned long previousMillisIR;
-unsigned long currentMillisIR;
 
 InterpretIRData::InterpretIRData(){
     irrecv.enableIRIn(); // Start the receiver
@@ -76,7 +67,7 @@ String InterpretIRData::interpretSignal(String data){
         interpretedString = "EXIT";
     }
     else{
-        interpretedString = "ERROR";
+        interpretedString = "__ERROR__";
     }
 
     return interpretedString;
