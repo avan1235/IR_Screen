@@ -3,8 +3,8 @@
      
 #include <Arduino.h>
 
-#define MAX_X_POSITION 32
-#define MAX_Y_POSITION 16
+#define MAX_X_POSITION 16
+#define MAX_Y_POSITION 8
 
 typedef uint8_t byte;
 
@@ -15,8 +15,8 @@ class Position {
     public:
         Position();
         ~Position();
-        void setX(byte x);
-        void setY(byte y);
+        void setX(byte);
+        void setY(byte);
         byte getX();
         byte getY();
         void Xpp();

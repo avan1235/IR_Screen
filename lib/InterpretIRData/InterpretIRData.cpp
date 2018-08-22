@@ -11,8 +11,7 @@ const String EXIT = "e0e0b44b";
 const String MUTE = "e0e0f00f";
 const String MENU = "e0e058a7";
 
-InterpretIRData::InterpretIRData(){
-    irrecv.enableIRIn(); // Start the receiver
+InterpretIRData::InterpretIRData():irrecv(RECV_PIN){
     previousMillisIR = millis();
     currentMillisIR = millis();
 }
@@ -21,6 +20,10 @@ InterpretIRData::~InterpretIRData(){
     /**
      * nothing to destruct
      */
+}
+
+void InterpretIRData::setupIR(){
+    irrecv.enableIRIn(); // Start the receiver
 }
 
 String InterpretIRData::checkIRSignal(){
@@ -35,7 +38,7 @@ String InterpretIRData::checkIRSignal(){
             irrecv.resume(); // Receive the next value
         }
     }
-
+    
     return IRdata;
 }
 
@@ -67,7 +70,7 @@ String InterpretIRData::interpretSignal(String data){
         interpretedString = "EXIT";
     }
     else{
-        interpretedString = "__ERROR__";
+        interpretedString = "ERROR";
     }
 
     return interpretedString;

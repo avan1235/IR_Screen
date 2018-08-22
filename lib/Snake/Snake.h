@@ -21,7 +21,6 @@ typedef uint8_t byte;
 class Snake {
     private:
         byte snakeSpeed;
-        byte snakeLength;
         byte snakeDirection;
         Position snakePosition;
         U8G2_SSD1306_128X64_NONAME_1_HW_I2C *screen;
@@ -31,7 +30,7 @@ class Snake {
         void turnRight();
         void turnLeft();
     public:
-        Snake(U8G2_SSD1306_128X64_NONAME_1_HW_I2C *screenToDsplaySnake);
+        Snake(U8G2_SSD1306_128X64_NONAME_1_HW_I2C*);
         ~Snake();
         void show();
         void actualizeDirecionAndSpeed();      
