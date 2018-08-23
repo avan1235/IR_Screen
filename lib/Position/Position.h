@@ -3,8 +3,8 @@
      
 #include <Arduino.h>
 
-#define MAX_X_POSITION 16
-#define MAX_Y_POSITION 8
+#define MAX_X_POSITION 32
+#define MAX_Y_POSITION 16
 
 typedef uint8_t byte;
 

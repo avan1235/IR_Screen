@@ -20,14 +20,9 @@ void displayPrepare() {
   OLEDScreen.setFontDirection(0);
 }
 
-void displayString(String toDraw) {
-  OLEDScreen.drawStr( 0, 0, toDraw.c_str());
-}
-
-void draw(String s) {
+void drawInterpreted(String s) {
   displayPrepare();
-  String toScreen = dataInterpreter.interpretSignal(s);
-  displayString(toScreen.c_str());
+  OLEDScreen.drawStr( 0, 0, dataInterpreter.interpretSignal(s).c_str());
 }
 
 void setup() {  
@@ -36,7 +31,12 @@ void setup() {
 
   dataInterpreter.setupIR();
 
-  pinMode(SPEAKER_PIN, HIGH);
+  pinMode(SPEAKER_PIN, OUTPUT);
+
+  OLEDScreen.firstPage();  
+  do {
+    mySnake.show();
+  } while( OLEDScreen.nextPage() );
 }
  
 void loop() {
@@ -46,7 +46,9 @@ void loop() {
 
   OLEDScreen.firstPage();  
   do {
-    draw(gotFromPilot);
+    drawInterpreted(gotFromPilot);
     mySnake.show();
+    mySnake.actualizeScreen();
   } while( OLEDScreen.nextPage() );
+
 }
